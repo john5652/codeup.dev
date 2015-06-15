@@ -1,0 +1,66 @@
+body
+ {
+ 	background-image: url("/IMG/grass.jpg");
+	background-repeat: no-repeat center center fixed;
+	background-size: cover;
+	background-attachment: fixed;
+	margin: 20px auto;
+	width: 935px;
+	text-align: center;
+	font-family: Zapfino;
+	color:purple;
+}
+
+h1, h2, h3, h4, h5
+{
+	text-decoration: underline;
+	color: black;
+	
+}
+
+.jeep
+{
+	opacity: 0.6;
+}
+
+li
+{
+	list-style: circle;
+}
+
+main
+{
+	background-color:orange;
+	opacity: 0.9;
+	margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 50px;
+}
+table
+{
+	margin-right: auto;
+	margin-left: auto;
+	background-color: blue;
+
+}
+
+
+a:link {
+    color: #FF0000;
+}
+
+
+a:visited {
+    color: #00FF00;
+}
+
+
+a:hover {
+    color: #FF00FF;
+}
+
+
+a:active {
+    color: #0000FF;
+}

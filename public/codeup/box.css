@@ -1,0 +1,110 @@
+.box
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+}
+   
+
+
+
+.box2
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px orange;
+    background-color: orange;
+    color: white;
+   	margin-left: 30px;
+}
+
+
+
+.box3
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px yellow;
+    background-color: yellow;
+    color: black;
+    margin-left: 90px;
+   }
+
+
+   .box4
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px green;
+    background-color: green;
+    color: white;
+    margin-left: 120px;
+  }
+   
+
+
+  .box5
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px blue;
+    background-color: blue;
+    color: white;
+    margin-left: 150px;
+   }
+
+   
+
+
+    .box6
+{
+	width: 150px;
+	height:50px;
+    padding: 10px;
+    border: 1px purple;
+    background-color: purple;
+    color: white;
+    margin-left: 180px;
+   
+   }
+
+
+   body
+   {
+   	text-align: center;
+   	margin: 30px auto;
+   	width: 430px;
+   	background-image: url("/IMG/grass.jpg");
+   	opacity: 0.9;
+   }
+
+
+   a:hover
+   {
+   	color:green;
+   }
+
+
+   a
+   {
+   	color: rgba(120, 200, 100, .9);
+   }
+
+
+   main
+   {
+   	background-color: gray;
+	opacity: 0.9;
+    margin-right: 30px;
+    margin-left: 50px;
+   }
+	    
+
+
