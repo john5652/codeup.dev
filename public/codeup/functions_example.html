@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Functions</title>
+</head>
+<body>
+<script type="text/javascript">
+
+function sayHi (firstName, lastName) {
+	console.log ("Hello, " + firstName + " " + lastName);
+}
+var firstName = "Glacier";
+var lastName = "Cohort";
+
+sayHi(firstName, lastName);
+
+
+function sum(a, b) {
+	return a + b;
+}
+
+var result = sum(432785, 23458);
+console.log (result);
+
+function doAThing(callback) {
+	console.log("Calling callback function");
+
+	return callback();
+}
+
+doAThing(sayHi);
+
+ // console.log(sum(1, sum(2, 3)));
+
+
+
+
+
+
+</script>
+</body>
+</html>
