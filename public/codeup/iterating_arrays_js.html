@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Iterating Arrays</title>
+</head>
+<body>
+
+<script type="text/javascript">
+'use strict';
+	// todo:
+	// Create an array of 4 names using literal array notation, in a variable called 'names'.
+
+	// todo:
+	// Create a log statement that will log the number of elements in the names array.
+
+	// todo:
+	// Create log statements that will print each of the names array elements individually.
+
+		var names = ['john', 'devi', 'jacob' ,'tyler']
+
+		console.log('There are ' + names.length + ' names in the list');
+
+		for (var i = 0; i < names.length; i++) {
+    	console.log('The name at index ' + i + ' is: ' + names[i]);
+}
+
+names.forEach(function(name, index, array) {
+
+	console.log('The name at index ' + index + ' is: ' + name);
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
