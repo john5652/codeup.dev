@@ -29,12 +29,21 @@
 
 <script type="text/javascript">
 
-		$(document).ready(function() {
-		    $('.codeup').css('border', '1px solid red').css('background-color', 'gold');
-		    $('.paragraph').css('border', '3px solid blue').css('background-color', 'green').css('color', 'yellow');
-		    $('document').css('background-color', 'red')
+	     $(document).ready(function() {
+	     $('li').css('font-size', '20px');
+	     $('li, h1, p').css('background-color', 'yellow');
+	     $('h2').css('color', 'white').css('background-color', 'black')
+	     $('body').css('background-color', 'purple')
+		     
+	});
 
-		});
+	     $(document).ready(function() {
+	     var contents = $('h1').html();
+	     alert(contents);
+
+    });
+
+		
 	
 </script>
 
