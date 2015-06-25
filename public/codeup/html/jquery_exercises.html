@@ -29,33 +29,47 @@
 
 <script type="text/javascript">
 		 
-		 $(document).ready(function() {
-            $('p').dblclick(function() {
-                $('p').css('font-size', '18px');
-            });
-        });
-
-
+	$(document).ready(function() {
+         $('p').dblclick(function() {
+            $('p').css('font-size', '18px');
+         });
+        
 	     $('h1').click(function() {
-           $( 'h1').css('background-color', 'yellow');
+           	if ($( 'h1').css('background-color') == "rgb(255, 255, 255)"){
+         		 
+           		$( 'h1').css('background-color', 'yellow');
+           		
+            } else {
+                
+           		$( 'h1').css('background-color', 'white');
+            } 	
 		 });
-
-		 $(document).ready(function() {
-            $('li').hover(
-                function() {
-                    $(this).css('color', 'red');
-                },
-                function() {
-                    $(this).css('color', 'black');
-                }
-            );
-        });
+           	
+         $('li').hover(
+            function() {
+                $(this).css('color', 'red');
+            },
+            function() {
+                $(this).css('color', 'black');
+            }
+         );
+      });
 		
-	
 </script>
 
 </body>
 </html>
+	
+
+        
+
+
+
+
+
+		 
+
+
 
 
 
