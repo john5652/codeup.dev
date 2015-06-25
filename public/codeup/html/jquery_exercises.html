@@ -28,21 +28,28 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <script type="text/javascript">
+		 
+		 $(document).ready(function() {
+            $('p').dblclick(function() {
+                $('p').css('font-size', '18px');
+            });
+        });
 
-	     $(document).ready(function() {
-	     $('li').css('font-size', '20px');
-	     $('li, h1, p').css('background-color', 'yellow');
-	     $('h2').css('color', 'white').css('background-color', 'black')
-	     $('body').css('background-color', 'purple')
-		     
-	});
 
-	     $(document).ready(function() {
-	     var contents = $('h1').html();
-	     alert(contents);
+	     $('h1').click(function() {
+           $( 'h1').css('background-color', 'yellow');
+		 });
 
-    });
-
+		 $(document).ready(function() {
+            $('li').hover(
+                function() {
+                    $(this).css('color', 'red');
+                },
+                function() {
+                    $(this).css('color', 'black');
+                }
+            );
+        });
 		
 	
 </script>
