@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> JS Calculator</title>
+</head>
+
+
+<body>
+
+<form name="calculator">
+
+
+ <input type="text" id='input' readonly size='7'> 
+ 
+
+ <input type="text" id='input2' readonly  size='9'> 
+
+
+ <input type="text" id='total' readonly size='7'> 
+
+
+</form>
+
+
+<div class="buttons">
+
+<button type="button">1</button>
+<button type="button">2</button>
+<button type="button">3</button>
+<button type="button">4</button>
+<button type="button">5</button>
+<button type="button">6</button>
+<button type="button">7</button>
+<br>
+<button type="button">8</button>
+<button type="button">9</button>
+<button type="button">0</button>
+<button type="button" id='add'>+</button>
+<button type="button" id='subtract'>-</button>
+<button type="button" id='multiply'>*</button>
+<button type="button" id='divide'>/</button>
+<button type="button" id='clear'>C</button>
+<button type="button" id='equals'>=</button>
+
+</div>
+
+
+
+
+
+<script language="javascript" type="text/javascript">
+"use strict";
+
+var number = '';
+var newnumber = '';
+var results = '';
+
+document.getElementById('add').addEventListener('click',function(){ 
+ document.getElementById('number2').value = '+' 
+
+ } , false);
+
+document.getElementById('subtract').addEventListener('click',function(){ 
+ document.getElementById('number2').value = '-' 
+
+ } , false);
+
+document.getElementById('multiply').addEventListener('click',function(){ 
+ document.getElementById('number2').value = '*' 
+
+ } , false);
+
+document.getElementById('divide').addEventListener('click',function(){ 
+ document.getElementById('number2').value = '/' 
+
+ } , false);
+
+document.getElementById('clear').addEventListener('click',function(){ 
+   
+    document.getElementById('input1').value = '';
+    document.getElementById('total').value = '';
+    document.getElementById('input2').value = '';
+    number = '';
+    newnumber = '';
+ } , false);
+
+
+
+
+
+document.getElementsByClassName("buttons").addEventListener('click', function(){
+
+ if (document.calculator.number2.value == '') { 
+ document.calculator.input1.value =(this.value);
+ } else {
+ document.calculator.total.value = (this.value)
+ }
+
+}, false);
+
+// document.getElementsByTagName('button')[1].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '2'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '2'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[2].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '3'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '3'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[3].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '4'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '4'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[4].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '5'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '5'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[5].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '6'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '6'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[6].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '7'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '7'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[7].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '8'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '8'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[8].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '9'; document.calculator.number1.value =(number);
+//  } else {
+//   newnumber += '9'; document.calculator.total.value = (newnumber)
+//  }
+
+// }, false);
+
+// document.getElementsByTagName('button')[9].addEventListener('click', function(){
+
+//  if (document.calculator.number2.value == '') { 
+//   number += '0'; document.calculator.number1.value =(number);
+//   console.log (number);
+//  } else {
+//   newnumber += '0'; document.calculator.total.value = (newnumber)
+//   console.log (newnumber);
+
+//  }
+
+// }, false);
+
+document.getElementById('equals').addEventListener('click',
+ function(){ 
+ number = parseInt(number);
+  newnumber = parseInt(newnumber);
+  
+  var results = document.getElementById('input2').value
+
+switch (results) {
+
+  case "+": 
+     document.getElementById('total').value= newnumber+number; 
+     document.getElementById('input').value= "";
+     document.getElementById('number2').value= "";
+    break;
+
+  case "-":
+     document.getElementById('total').value= number-newnumber; 
+     document.getElementById('input').value= "";
+     document.getElementById('input2').value= "";
+  break;
+
+  case "/": 
+    document.getElementById('total').value= number/newnumber; 
+    document.getElementById('input').value= "";
+    document.getElementById('input2').value= "";
+  break;
+
+  case "*": 
+    document.getElementById('total').value= number*newnumber; 
+    document.getElementById('input').value= "";
+    document.getElementById('input2').value= "";
+  break;
+
+  default:
+  null;
+}
+
+ }, false);
+  
+</script>
+
+    </script>
+  </body>
+</html>

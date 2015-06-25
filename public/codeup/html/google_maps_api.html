@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Maps</title>
+  <style type="text/css">
+#map-canvas {
+  width:320px;
+  height: 480px;
+  display: inline-block;
+  margin: 15px;
+}
+  </style>
+  </head>
+<body>
+
+  <div id="map-canvas"></div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD78_rOG7OiSPOM0mfCpeROI81YpH2z2Rc"></script>
+
+  <script type="text/javascript">
+
+      var address = "3147 SE Military Dr San Antonio, TX"
+      console.log (address);
+
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode( { 'address': address}, function(results, status) {
+  
+      if (status == google.maps.GeocoderStatus.OK) {
+      var mapOptions = {
+      zoom: 18,
+      center: results[0].geometry.location,
+      }
+      var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  }   else {
+      alert("Geocoding was not successful - STATUS: " + status);
+      }
+     
+      var johnnys = { lat: 29.352357, lng: -98.4382 };
+      var marker = new google.maps.Marker({
+      position: johnnys,
+      map: map
+
+    });
+
+      var infowindow = new google.maps.InfoWindow({
+      content: 'BEST ITALLIAN AROUND'
+    });
+
+    infowindow.open(map,marker);
+});
+
+  </script>
+      
+</body>
+</html>
+    
+ 
+
+
+
+     
+
+
+
+
+
+
+
+
+
