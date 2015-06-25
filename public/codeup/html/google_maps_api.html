@@ -7,8 +7,22 @@
   width:320px;
   height: 480px;
   display: inline-block;
-  margin: 15px;
+  margin-left: 15px;
 }
+#map-canvas2 {
+  width:320px;
+  height: 480px;
+  display: inline-block;
+  margin-left: 25px;
+}
+
+#map-canvas3 {
+  width:320px;
+  height: 480px;
+  display: inline-block;
+  margin-left: 25px;
+}
+
   </style>
   </head>
 <body>
@@ -27,10 +41,83 @@
   
       if (status == google.maps.GeocoderStatus.OK) {
       var mapOptions = {
-      zoom: 18,
+      zoom: 5,
       center: results[0].geometry.location,
       }
       var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  }   else {
+      alert("Geocoding was not successful - STATUS: " + status);
+      }
+     
+      var johnnys = { lat: 29.352357, lng: -98.4382 };
+      var marker = new google.maps.Marker({
+      position: johnnys,
+      map: map
+
+    });
+
+      var infowindow = new google.maps.InfoWindow({
+      content: 'BEST ITALLIAN AROUND'
+    });
+
+    infowindow.open(map,marker);
+});
+
+  </script>
+
+
+<div id="map-canvas2"></div>
+  <script type="text/javascript">
+
+      var address = "3147 SE Military Dr San Antonio, TX"
+      console.log (address);
+
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode( { 'address': address}, function(results, status) {
+  
+      if (status == google.maps.GeocoderStatus.OK) {
+      var mapOptions = {
+      zoom: 15,
+      center: results[0].geometry.location,
+      }
+      var map = new google.maps.Map(document.getElementById("map-canvas2"), mapOptions);
+  }   else {
+      alert("Geocoding was not successful - STATUS: " + status);
+      }
+     
+      var johnnys = { lat: 29.352357, lng: -98.4382 };
+      var marker = new google.maps.Marker({
+      position: johnnys,
+      map: map
+
+    });
+
+      var infowindow = new google.maps.InfoWindow({
+      content: 'BEST ITALLIAN AROUND'
+    });
+
+    infowindow.open(map,marker);
+});
+
+  </script>
+
+  <div id="map-canvas3"></div>
+  <script type="text/javascript">
+
+      var address = "3147 SE Military Dr San Antonio, TX"
+      console.log (address);
+
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode( { 'address': address}, function(results, status) {
+  
+      if (status == google.maps.GeocoderStatus.OK) {
+      var mapOptions = {
+      zoom: 20,
+      center: results[0].geometry.location,
+      }
+      var map = new google.maps.Map(document.getElementById("map-canvas3"), mapOptions);
   }   else {
       alert("Geocoding was not successful - STATUS: " + status);
       }
