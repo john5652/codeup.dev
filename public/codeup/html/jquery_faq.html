@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>FAQ</title>
+	<style type="text/css">
+.invisible {
+	display: none;
+}
+	</style>
+</head>
+<body>
+	<h1>FAQ</h1>
+
+
+	<h2>Big Bend National Park</h2>
+<dl>
+  	<dt>How big is this park?</dt>
+  		<dd>Over 3000 acres</dd>
+  		<br>
+  	<dt>Where is this park located?</dt>
+  		<dd>Marble Falls Texas</dd>
+  		<br>
+  	<dt>Is camping allowed?</dt>
+  		<dd>Yes</dd>
+  		<br>
+  	<dt>Are cabins available?</dt>
+  		<dd>Yes</dd>
+  		<br>
+  	<dt>What types of vehicles are allowed at this park?</dt>
+  		<dd>Any 4x4 or off-roading vehicle is allowed.</dd>
+  		<br>
+  	<dt>What are the entrance fees?</dt>
+  		<dd>25$ per driver and 15$ per passenger</dd>
+  		<br>
+  	<dt>Is the park open all year round?</dt>
+  		<dd>Yes</dd>
+  		<br>
+  	<dt>Is there a river?</dt>
+  		<dd class="invisible">Yes</dd>
+  		<br>
+  	<dt>Are the trails marked?</dt>
+  		<dd>Yes</dd>
+  		<br>
+  	<dt>Can reservations be made?</dt>
+  		<dd>Yes</dd
+</dl>
+
+</body>
+
+
+</body>
+<script src="/codeup/jquery/jquery.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$('dd').addClass('invisible');
+	$('dt').click(function(event) {
+        event.preventDefault();
+    $('dd').toggleClass('invisible');
+
+    });
+});
+</script>
+</html>
