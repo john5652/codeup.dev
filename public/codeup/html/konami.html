@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konami Code</title>
+</head>
+<body>
+    <h1>Konami Code</h1>
+
+    <script src="/codeup/jquery/jquery.js"></script>
+    <script>
+        "use strict";
+
+    $(document).ready(function(){
+       var keyInput = [];
+       var konami = [38,38,40,40,37,39,37,39,66,65,13];
+
+       $(document).keydown(function(e){
+	       	keyInput.push(e.keyCode);
+	       	if (keyInput.length > konami.length) {
+       			keyInput.shift();
+       		}
+
+	       	if (keyInput.toString() == konami.toString()) {
+       			alert('You now have 30 Lives!');
+       		}
+       });
+
+});
+    </script>
+</body>
+</html>
