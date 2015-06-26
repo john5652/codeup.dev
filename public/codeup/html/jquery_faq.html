@@ -6,13 +6,17 @@
 .invisible {
 	display: none;
 }
+.untoggle {
+	display: all;
+}
 	</style>
 </head>
 <body>
-	<h1>FAQ</h1>
 
+	<h1>Top National Park</h1>
 
 	<h2>Big Bend National Park</h2>
+
 <dl>
   	<dt>How big is this park?</dt>
   		<dd>Over 3000 acres</dd>
@@ -36,7 +40,7 @@
   		<dd>Yes</dd>
   		<br>
   	<dt>Is there a river?</dt>
-  		<dd class="invisible">Yes</dd>
+  		<dd>Yes</dd>
   		<br>
   	<dt>Are the trails marked?</dt>
   		<dd>Yes</dd>
@@ -45,20 +49,60 @@
   		<dd>Yes</dd
 </dl>
 
-</body>
+<h1>Texas National Parks</h1>
+
+	<h3 class="untoggle">Enchanted Rock</h3>
+<ul>
+		<li>Enchanted Rock is a big rock!</li>
+		<li>Enchanted Rock is one of the largest formations in Texas. </li>
+		<li>Enchanted Rock can be hiked or walked.</li>
+		<li>Enchanted Rock can be very dangerous.</li>
+</ul>
+
+	<h3 class="untoggle">Big Ben</h3>
+<ul>
+		<li>Big Ben is the number one national park in Texas.</li>
+		<li>Big Ben is a great place for an offroad adventure.</li>
+		<li>Big Ben is located in Marble Falls, Texas</li>
+		<li>Big Ben has much to offer including campsites and cabins for lodging.</li>
+</ul>
+
+	<h3 class="untoggle">Padre Island</h3>
+<ul>
+		<li>Padre Island is a National Seashore in Texas.</li>
+		<li>Padre does not have very big waves or much to offer.</li>
+		<li>This beach is located in the Gulf of Mexico.</li>
+		<li> The beaches here are normally very crowded.</li>
+</ul>
 
 
 </body>
+
+
 <script src="/codeup/jquery/jquery.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
 	$('dd').addClass('invisible');
-	$('dt').click(function(event) {
-        event.preventDefault();
-    $('dd').toggleClass('invisible');
 
+	$('dt').click(function(event) {
+    	event.preventDefault();
+    $('dd').toggleClass('invisible');
     });
+
+	$('ul').each(function(){
+		$(this).children().first().css('font-weight', 'bold');
+	});
+
+	$('li').click(function(event) {
+    $(this).parent().toggleClass('invisible');
+    });
+    	
+    $('h3').click(function(event) {
+    	    $(this).next().removeClass('invisible');
+    });
+
+
 });
 </script>
 </html>
