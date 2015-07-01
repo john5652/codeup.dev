@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather</title>
+</head>
+<body>
+
+	<style type="text/css">
+
+.weatherApp {
+	
+	color: darkblue;
+	border: 2px solid black;
+	width: 400px;
+	height: 300px;
+	
+	text-align: center;
+	background-color: lightblue;
+	display: inline-block;
+}
+
+body {
+	background-color: lightgreen;
+}
+	</style>
+	
+
+
+
+
+
+	<h1>Weather APP</h1>
+
+	<h3>San Antonio</h3>
+	<div id="weather" class='weatherApp'></div>
+	<div id="weather2" class='weatherApp'></div>
+	<div id="weather3" class='weatherApp'></div>
+	<div id="weather4" class='weatherApp'></div>
+
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"> </script>
+	
+	<script type="text/javascript">
+		var ajaxRequest = $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+    		APPID: "444c957d363d5c10e41a0883ed6ab6de",
+    		q:     "San Antonio, TX",
+    		units: "imperial",
+    		cnt: '3'
+		});
+
+		ajaxRequest.always(function(){
+			console.log('request sent');
+		});
+
+		ajaxRequest.fail(function(data, error){
+			console.log(error);
+			console.log(ajaxRequest.status);
+		});
+
+		ajaxRequest.done(function(data){
+			console.log (data);
+    		var htmlString = "";
+
+    		htmlString += '<p>' + data.list[0].temp.min + ' / ' + data.list[0].temp.max + '</p>'
+        		   + '<p>' + data.list[0].weather[0].main + ': ' + data.list[0].weather[0].description +'</p>'
+        		   + '<p><img src=\"http://openweathermap.org/img/w/' + data.list[0].weather[0].icon + '.png\"></p>'
+        		   + '<p>' + 'Humidity: ' + data.list[0].humidity + '</p>'
+        		   + '<p>' + 'Wind: ' + data.list[0].speed + ' mph' + '</p>'
+        		   + '<p>' + 'Pressure: ' + data.list[0].pressure + '</p>'
+    
+		    $('#weather').html(htmlString);
+
+
+		    htmlString = '<p>' + data.list[1].temp.min + ' / ' + data.list[1].temp.max + '</p>'
+		        		   + '<p>' + data.list[1].weather[0].main + ": " + data.list[1].weather[0].description + '</p>'
+		        		   + '<p><img src=\"http://openweathermap.org/img/w/' + data.list[1].weather[0].icon + '.png\"></p>'
+		        		   + '<p>' + 'Humidity: ' + data.list[1].humidity + '</p>'
+		        		   + '<p>' + 'Wind: ' + data.list[1].speed + ' mph' + '</p>'
+		        		   + '<p>' + 'Pressure: ' + data.list[1].pressure + '</p>'
+		    
+		    $('#weather2').html(htmlString);
+
+		    
+		       htmlString = '<p>' + data.list[2].temp.min + ' / ' + data.list[2].temp.max + '</p>'
+		        		   + '<p>' + data.list[2].weather[0].main + ": " + data.list[2].weather[0].description +'</p>'
+		        		   + '<p><img src=\"http://openweathermap.org/img/w/' + data.list[2].weather[0].icon + '.png\"></p>'
+		        		   + '<p>' + 'Humidity: ' + data.list[2].humidity + '</p>'
+		        		   + '<p>' + 'Wind: ' + data.list[2].speed + ' mph' + '</p>'
+		        		   + '<p>' + 'Pressure: ' + data.list[2].pressure + '</p>'
+		    
+		    $('#weather3').html(htmlString);
+
+
+		    var latitude = ''
+		    var longitude = ''
+		    		var ajaxRequest = $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+    		APPID: "444c957d363d5c10e41a0883ed6ab6de",
+    		lat:   latitude,
+    		lon:   longitude,
+    		units: "imperial", 
+    		cnt: '1'
+		});
+
+		ajaxRequest.done(function(data){
+			console.log (data);
+    		var htmlString = "";
+
+    		htmlString += '<p>' + data.list[0].temp.min + ' / ' + data.list[0].temp.max + '</p>'
+        		   + '<p>' + data.list[0].weather[0].main + ': ' + data.list[0].weather[0].description +'</p>'
+        		   + '<p><img src=\"http://openweathermap.org/img/w/' + data.list[0].weather[0].icon + '.png\"></p>'
+        		   + '<p>' + 'Humidity: ' + data.list[0].humidity + '</p>'
+        		   + '<p>' + 'Wind: ' + data.list[0].speed + ' mph' + '</p>'
+        		   + '<p>' + 'Pressure: ' + data.list[0].pressure + '</p>'
+    
+		    $('#weather4').html(htmlString);
+
+   });
+
+
+	</script>
+
+</body>
+</html>
+
+	
+                   
+
+
+

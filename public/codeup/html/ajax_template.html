@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Weather API Example</title>
+</head>
+<body>
+	<h1>Weather Example</h1>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"> </script>
+	
+	<script type="text/javascript">
+		var ajaxRequest = $.get("http://api.openweathermap.org/data/2.5/weather", {
+    		APPID: "444c957d363d5c10e41a0883ed6ab6de",
+    		q:     "San Antonio, TX"
+		});
+
+		ajaxRequest.always(function(){
+			console.log('request sent');
+		});
+
+		ajaxRequest.fail(function(data, error){
+			console.log(error);
+			console.log(ajaxRequest.status);
+		});
+
+		ajaxRequest.done(function(data){
+			console.log(data);
+		});
+
+
+
+	</script>
+</body>
+</html>
+
