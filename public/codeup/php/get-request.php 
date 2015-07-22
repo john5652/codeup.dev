@@ -1,0 +1,12 @@
+<?php 
+	var_dump($_GET); 
+ ?>
+
+ <html>
+ <head>
+ 	<title>GET Requests</title>
+ </head>
+ <body>
+ 	<a href="?name=Johnathan"> My Name></a>
+ </body>
+ </html>
