@@ -37,31 +37,14 @@ cardIsAce($cards);
 // // face cards are worth 10
 // // numeric cards are worth their value
 function getCardValue($card) {
-	$theCard = explode(' ', $card); 
-	$total = 0;
-	$number_of_aces = 0;
-	switch($theCard[0]) { 
-    	case '10':
-        case 'K':
-        case 'Q':
-        case 'J':
-       	    $total += 10; 
-        	break; 
-        case 'A': 
-        	$total += 11; 
-        	$number_of_aces++;    
-        	break;
-        default:
-        	$total += $theCard[0];
-        	break; 
-    }
-    return $total;
-} 
-
-
-foreach($cards as $card) {
-	getCardValue($card);
-	print_r($card);
+  if (substr($card, 0, 1) == 'A') {
+    $value = 11;
+  } elseif (substr($card, 0, 1) == 'K' || substr($card, 0, 1) == 'Q' || substr($card, 0, 1) == 'J') {
+    $value = 10;
+  } else {
+    $value = substr($card, 0, 1);
+  }
+  return $value;
 }
 
 

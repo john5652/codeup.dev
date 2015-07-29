@@ -3,6 +3,12 @@
 // this function must be called before trying to set of get any session data!
 session_start();
 
+if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
+	session_destroy();
+	session_start();
+	$_SESSION = array();
+}
+
 // get the current session id
 $sessionId = session_id();
 
@@ -30,5 +36,7 @@ $_SESSION['VIEW_COUNT'] = $viewCount;
 <body>
     Session Id: <?php echo $sessionId; ?><br>
     View Count: <?php echo $viewCount; ?>
+
+    <a href="session_example.php?reset=true">Reset Counter</a>
 </body>
 </html>
